@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mais Atrações no Recife Antigo</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background: linear-gradient(to right, #0077b6, #00b4d8);
+            color: white;
+            text-align: center;
+            padding: 2em 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        nav {
+            background-color: #023e8a;
+            padding: 1em 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        nav a {
+            color: white;
+            margin: 0 1em;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            color: #ffba08;
+        }
+        main {
+            max-width: 1000px;
+            margin: 2em auto;
+            padding: 0 1em;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2em;
+        }
+        section {
+            background: white;
+            padding: 2em;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        section h2 {
+            color: #0077b6;
+            border-bottom: 2px solid #00b4d8;
+            padding-bottom: 0.5em;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1em;
+            justify-content: center;
+        }
+        .gallery img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+        footer {
+            background-color: #023e8a;
+            color: white;
+            padding: 1em 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        footer a {
+            color: #ffba08;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+            nav {
+                flex-direction: column;
+                gap: 0.5em;
+            }
+            .gallery img {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Mais Atrações no Recife Antigo</h1>
+        <nav>
+            <a href="index.html">Marco Zero</a>
+            <a href="#parque">Parque das Esculturas</a>
+            <a href="#artesanato">Centro de Artesanato</a>
+        </nav>
+    </header>
+
+    <main>
+
+  <section id="parque">
+            <h2>Parque das Esculturas de Francisco Brennand</h2>
+            <p>O <strong>Parque das Esculturas de Francisco Brennand</strong> é uma galeria a céu aberto localizada em um recife de corais próximo ao Marco Zero. Acessível por uma curta travessia de barco pelo <em>Rio Capibaribe</em>, o parque exibe dezenas de esculturas criadas pelo renomado artista pernambucano Francisco Brennand. Inaugurado em <time datetime="2000">2000</time>, o espaço é um marco da <mark>arte contemporânea</mark> no Nordeste.</p>
+            <p>As esculturas, muitas delas inspiradas na fauna e na mitologia, criam um cenário único que combina arte e natureza. O parque é especialmente encantador ao <mark>pôr do sol</mark>, quando as obras ganham tons dourados refletidos pelo mar.</p>
+            <div class="gallery">
+                <img src="https://www.viajandosempressa.com.br/wp-content/uploads/2016/02/DSCN1938.jpg" alt="Esculturas de Francisco Brennand no parque">
+                <img src="https://tse1.explicit.bing.net/th/id/OIP.1jVm9ZsvWi5tUGebif_mCAHaEg?cb=iwc1&rs=1&pid=ImgDetMain" alt="Vista do parque com o mar ao fundo">
+            </div>
+        </section>
+
+        <section id="artesanato">
+            <h2>Centro de Artesanato de Pernambuco</h2>
+            <p>O <strong>Centro de Artesanato de Pernambuco</strong>, localizado nos armazéns históricos do Bairro do Recife, é um espaço dedicado à valorização do trabalho dos artesãos locais. Aberto ao público desde <time datetime="2012">2012</time>, o centro oferece uma vasta coleção de peças, incluindo cerâmicas, bordados e esculturas em madeira, que refletem a <mark>rica tradição cultural</mark> do estado.</p>
+            <p>Além de ser um ponto de compra, o espaço promove oficinas e exposições, permitindo que os visitantes conheçam o processo criativo por trás das obras. É um lugar ideal para quem busca lembranças autênticas do Recife.</p>
+            <div class="gallery">
+                <img src="https://tse1.mm.bing.net/th/id/OIP.rBJc3z3yU2JHvi7IzhpUBgAAAA?cb=iwc1&rs=1&pid=ImgDetMain" alt="Interior do Centro de Artesanato de Pernambuco">
+                <img src="https://live.staticflickr.com/5178/5485700257_10a3b686a2_b.jpg" alt="Peças artesanais em exposição">
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Descubra Recife. Saiba mais em <a href="https://www.recife.pe.gov.br">recife.pe.gov.br</a>.</p>
+    </footer>
+</body>
+</html>

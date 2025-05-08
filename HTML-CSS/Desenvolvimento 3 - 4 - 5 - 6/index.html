@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco Zero - Recife</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background: linear-gradient(to right, #0077b6, #00b4d8);
+            color: white;
+            text-align: center;
+            padding: 2em 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        nav {
+            background-color: #023e8a;
+            padding: 1em 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        nav a {
+            color: white;
+            margin: 0 1em;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            color: #ffba08;
+        }
+        main {
+            max-width: 1000px;
+            margin: 2em auto;
+            padding: 0 1em;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2em;
+        }
+        section {
+            background: white;
+            padding: 2em;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        section h2 {
+            color: #0077b6;
+            border-bottom: 2px solid #00b4d8;
+            padding-bottom: 0.5em;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1em;
+            justify-content: center;
+        }
+        .gallery img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+        footer {
+            background-color: #023e8a;
+            color: white;
+            padding: 1em 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        footer a {
+            color: #ffba08;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+            nav {
+                flex-direction: column;
+                gap: 0.5em;
+            }
+            .gallery img {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Marco Zero - O Coração do Recife</h1>
+        <nav>
+            <a href="#historia">História</a>
+            <a href="#atracoes">Atrações</a>
+            <a href="#galeria">Galeria</a>
+            <a href="mais-atracoes.html">Mais Atrações</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="historia">
+            <h2>A História do Marco Zero</h2>
+            <p>O <strong>Marco Zero</strong> é o ponto de origem da cidade do Recife, localizado no bairro do Recife Antigo. Este local emblemático marca o início da contagem das distâncias rodoviárias de Pernambuco. Fundado oficialmente em <time datetime="1999">1999</time>, o Marco Zero é mais do que um ponto geográfico; é um símbolo cultural e histórico da capital pernambucana.</p>
+            <p>A praça onde está localizado, chamada <em>Praça Rio Branco</em>, foi revitalizada para se tornar um espaço vibrante, onde moradores e turistas se encontram para celebrar a rica <mark>cultura nordestina</mark>. O local é palco de eventos como o Carnaval Multicultural do Recife, que atrai milhares de visitantes anualmente.</p>
+        </section>
+
+        <section id="atracoes">
+            <h2>Atrações no Marco Zero</h2>
+            <p>Além de sua importância histórica, o Marco Zero oferece diversas atrações. A poucos passos, você pode visitar o <strong>Parque das Esculturas de Francisco Brennand</strong>, acessível por uma curta travessia de barco pelo Rio Capibaribe. A <mark>vista do pôr do sol</mark> no Marco Zero é um espetáculo à parte, com os armazéns históricos do Bairro do Recife ao fundo.</p>
+            <p>Os visitantes também podem desfrutar de bares, restaurantes e espaços culturais, como o <em>Centro de Artesanato de Pernambuco</em>, que exibe o talento dos artesãos locais. A atmosfera é sempre animada, com apresentações de <strong>frevo</strong>, <strong>maracatu</strong> e outros ritmos que definem a identidade do Recife.</p>
+        </section>
+
+        <section id="galeria">
+            <h2>Galeria de Imagens</h2>
+            <div class="gallery">
+                <img src="https://img.freepik.com/fotos-premium/vista-aerea-do-marco-zero-antigo-na-cidade-de-recife-pernambuco-brasil_794048-65.jpg?w=2000" alt="Vista aérea do Marco Zero">
+                <img src="https://live.staticflickr.com/3649/3492504340_76a381b4ec_b.jpg" alt="Praça Rio Branco ao entardecer">
+                <img src="https://th.bing.com/th/id/R.3e90b3008e4089f794f64b5fe7b13fec?rik=xKkNTIc8T%2froQA&riu=http%3a%2f%2fvisit.recife.br%2fwp-content%2fuploads%2f2017%2f10%2fo-que-fazer-parque-das-esculturas-destaque2.jpg&ehk=y8hv3OTaeyK77an0fFtN3JVzhDOU2hup69H3jwBG9%2b0%3d&risl=&pid=ImgRaw&r=0" alt="Parque das Esculturas de Francisco Brennand">
+            </div>    
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Descubra Recife. Saiba mais em <a href="https://www.recife.pe.gov.br">recife.pe.gov.br</a>.</p>
+    </footer>
+</body>
+</html>
