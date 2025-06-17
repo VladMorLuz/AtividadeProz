@@ -1,0 +1,134 @@
+# Plano de Migração para AWS - Aplicação Web Legada
+
+## 1. Planejamento e Execução da Migração
+
+### 1.1 Auditoria da Infraestrutura Atual
+- **Objetivo**: Mapear a arquitetura atual, identificar dependências e pontos fracos.
+- **Ações**:
+  - **Inventário de Componentes**:
+    - Servidores: Identificar número, tipo (físicos/virtuais), SO (ex.: Linux/Windows), e capacidade (CPU, RAM, disco).
+    - Bancos de dados: Tipo (ex.: MySQL, PostgreSQL), tamanho (ex.: 500 GB), e esquema.
+    - Dependências: Bibliotecas, frameworks (ex.: Java Spring, Node.js), e serviços externos (ex.: APIs de pagamento).
+    - Rede: Endereços IP, portas, regras de firewall, e balanceadores de carga locais.
+  - **Pontos Fracos**:
+    - Escalabilidade limitada: Servidores sobrecarregados durante picos de tráfego.
+    - Disponibilidade: Falhas frequentes devido a pontos únicos de falha (SPOF).
+    - Manutenção: Custos elevados e tempo gasto em atualizações manuais.
+  - **Ferramentas**:
+    - AWS Application Discovery Service para mapear servidores e dependências.
+    - Documentação manual via entrevistas com a equipe e revisão de logs.
+  - **Saída**: Relatório com arquitetura atual, dependências, e recomendações para migração.
+
+### 1.2 Seleção de Serviços AWS
+- **Objetivo**: Escolher serviços AWS que atendam às necessidades da aplicação.
+- **Serviços Selecionados**:
+  - **Compute**: Amazon EC2 para hospedar a aplicação, com instâncias t3.medium para balancear custo e desempenho.
+  - **Banco de Dados**: Amazon RDS (ex.: MySQL/PostgreSQL) para gerenciar o banco de dados, com réplicas de leitura para alta disponibilidade.
+  - **Balanceamento de Carga**: Elastic Load Balancer (ELB) para distribuir tráfego entre instâncias EC2.
+  - **Armazenamento**: Amazon S3 para arquivos estáticos (ex.: imagens, CSS, JS).
+  - **Rede**: Amazon VPC para isolar a infraestrutura e configurar subnets públicas/privadas.
+  - **Segurança**: AWS IAM para controle de acesso e AWS KMS para criptografia de dados.
+  - **Monitoramento**: Amazon CloudWatch para métricas de desempenho e logs.
+  - **Escalabilidade**: Auto Scaling Groups para ajustar o número de instâncias EC2 conforme a demanda.
+- **Critérios de Seleção**:
+  - Compatibilidade com a aplicação legada (ex.: suporte ao SO e frameworks).
+  - Conformidade com padrões de segurança (ex.: LGPD, ISO 27001).
+  - Custo-benefício: Priorizar serviços gerenciados para reduzir manutenção.
+
+### 1.3 Execução da Migração
+- **Fases**:
+  - **Fase 1: Preparação (2 meses)**:
+    - Configurar a VPC com subnets públicas (para ELB) e privadas (para EC2/RDS).
+    - Provisionar instâncias EC2 e instalar dependências da aplicação.
+    - Configurar o RDS com backup automatizado e réplicas de leitura.
+    - Migrar arquivos estáticos para o S3 e configurar o CloudFront como CDN.
+  - **Fase 2: Migração de Dados (1 mês)**:
+    - Usar AWS Database Migration Service (DMS) para transferir dados do banco local para o RDS.
+    - Validar integridade dos dados com scripts de comparação (ex.: checksums).
+  - **Fase 3: Migração da Aplicação (2 meses)**:
+    - Implantar a aplicação nas instâncias EC2 usando AWS Server Migration Service (SMS) ou scripts manuais.
+    - Configurar o ELB para distribuir tráfego entre instâncias.
+  - **Fase 4: Testes e Cutover (1 mês)**:
+    - Realizar testes de integração e desempenho (detalhados na seção 2).
+    - Atualizar DNS para apontar para o ELB, completando a migração.
+
+## 2. Garantindo Mínima Interrupção
+
+### Métodos para Minimizar Tempo de Inatividade
+- **Migração em Fases**:
+  - Migrar componentes não críticos (ex.: arquivos estáticos) primeiro, mantendo a aplicação em execução nos servidores locais.
+  - Usar um ambiente híbrido temporário, onde o ELB distribui tráfego entre servidores locais e na nuvem durante a transição.
+- **Blue-Green Deployment**:
+  - Configurar um ambiente "blue" (atual, local) e um ambiente "green" (novo, AWS).
+  - Após testes, redirecionar o tráfego para o ambiente green via ELB, permitindo reversão rápida se necessário.
+- **DNS TTL Baixo**:
+  - Reduzir o TTL do DNS (ex.: 60 segundos) antes do cutover para minimizar propagação.
+- **Plano de Contingência**:
+  - Manter servidores locais ativos por 1 mês após o cutover como fallback.
+  - Criar snapshots do RDS e backups do S3 antes da migração.
+
+### Testes Durante a Migração
+- **Ferramentas**:
+  - **AWS CloudWatch**: Monitorar latência, erros e uso de CPU/memória.
+  - **Postman/Newman**: Testes automatizados de APIs para verificar funcionalidade.
+  - **Apache JMeter**: Simular tráfego para testar escalabilidade e desempenho.
+- **Tipos de Testes**:
+  - **Funcionais**: Validar que todas as funcionalidades (ex.: login, consultas) operam corretamente.
+  - **Desempenho**: Medir latência (ex.: < 200 ms para requisições) e suportar 10.000 usuários simultâneos.
+  - **Segurança**: Testes de penetração para identificar vulnerabilidades (ex.: injeção SQL).
+  - **Failover**: Simular falhas de instâncias EC2 para verificar recuperação automática via ELB e Auto Scaling.
+- **Critérios de Sucesso**:
+  - Zero erros críticos nas funcionalidades principais.
+  - Tempo de resposta < 200 ms em 95% das requisições.
+  - Recuperação de falhas em < 1 minuto.
+
+## 3. Benefícios da AWS e Otimização
+
+### Benefícios Esperados
+- **Escalabilidade**:
+  - Auto Scaling Groups ajustam o número de instâncias EC2 com base na demanda (ex.: CPU > 70% aumenta instâncias).
+  - Suporte a picos de tráfego sem sobrecarga, melhorando a experiência do usuário.
+- **Disponibilidade**:
+  - ELB e múltiplas zonas de disponibilidade (AZs) garantem uptime de 99,99%.
+  - Réplicas de leitura no RDS reduzem latência e aumentam redundância.
+- **Custo-Benefício**:
+  - Modelo pay-as-you-go reduz custos fixos em comparação com servidores locais.
+  - Economia de 20-30% com instâncias reservadas para cargas constantes.
+- **Manutenção Reduzida**:
+  - Serviços gerenciados (RDS, S3) eliminam tarefas como patches e backups manuais.
+- **Segurança**:
+  - Conformidade com LGPD e ISO 27001 via AWS.
+  - Criptografia de dados em trânsito (TLS) e em repouso (KMS).
+
+### Otimização do Desempenho
+- **Auto Scaling**:
+  - Configurar políticas para adicionar/remover instâncias EC2 com base em métricas do CloudWatch (ex.: CPU, latência).
+- **Cache**:
+  - Usar Amazon ElastiCache (Redis/Memcached) para cache de sessões e consultas frequentes, reduzindo carga no RDS.
+- **CDN**:
+  - CloudFront para entregar arquivos estáticos com baixa latência globalmente.
+- **Monitoramento Contínuo**:
+  - Configurar alertas no CloudWatch para CPU > 80%, erros 5xx, ou latência > 500 ms.
+  - Usar CloudWatch Logs Insights para análise de logs e identificação de gargalos.
+- **Otimização de Custos**:
+  - Usar AWS Cost Explorer para monitorar gastos e identificar recursos subutilizados.
+  - Desligar instâncias de teste após a migração.
+  - Reservar instâncias EC2 e RDS para cargas previsíveis, economizando até 40%.
+- **Manutenção Proativa**:
+  - Aplicar atualizações automáticas no RDS durante janelas de manutenção.
+  - Revisar configurações de segurança trimestralmente com AWS Trusted Advisor.
+
+## Cronograma
+- **Auditoria e Planejamento**: 2 meses
+- **Preparação (VPC, EC2, RDS)**: 2 meses
+- **Migração de Dados**: 1 mês
+- **Migração da Aplicação**: 2 meses
+- **Testes e Cutover**: 1 mês
+- **Monitoramento Inicial**: 1 mês
+- **Duração Total**: ~9 meses
+
+## Resultados Esperados
+- **Disponibilidade**: Uptime de 99,99%.
+- **Desempenho**: Latência reduzida em 30% e suporte a 10.000 usuários simultâneos.
+- **Custo**: Economia de 25% em infraestrutura em 1 ano.
+- **Satisfação do Usuário**: Redução de 90% nas reclamações relacionadas a performance.
