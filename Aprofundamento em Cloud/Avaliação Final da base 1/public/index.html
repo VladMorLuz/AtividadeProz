@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Cadastro e Login</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+  <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
+    <h1 class="text-2xl font-bold mb-6 text-center">Cadastro e Login</h1>
+    
+    <!-- Formulário de Cadastro -->
+    <div id="register-form">
+      <h2 class="text-xl mb-4">Cadastro</h2>
+      <input type="text" id="reg-username" placeholder="Usuário" class="w-full p-2 mb-4 border rounded">
+      <input type="password" id="reg-password" placeholder="Senha" class="w-full p-2 mb-4 border rounded">
+      <input type="email" id="reg-email" placeholder="Email" class="w-full p-2 mb-4 border rounded">
+      <input type="text" id="reg-telefone" placeholder="Telefone (opcional)" class="w-full p-2 mb-4 border rounded">
+      <input type="date" id="reg-data-nascimento" class="w-full p-2 mb-4 border rounded">
+      <input type="text" id="reg-foto-perfil" placeholder="URL da foto de perfil (opcional)" class="w-full p-2 mb-4 border rounded">
+      <button onclick="register()" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Cadastrar</button>
+      <p class="mt-4 text-center">Já tem conta? <a href="#" onclick="showLogin()" class="text-blue-500">Fazer Login</a></p>
+    </div>
+
+    <!-- Formulário de Login -->
+    <div id="login-form" class="hidden">
+      <h2 class="text-xl mb-4">Login</h2>
+      <input type="text" id="login-username" placeholder="Usuário" class="w-full p-2 mb-4 border rounded">
+      <input type="password" id="login-password" placeholder="Senha" class="w-full p-2 mb-4 border rounded">
+      <button onclick="login()" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Entrar</button>
+      <p class="mt-4 text-center">Não tem conta? <a href="#" onclick="showRegister()" class="text-blue-500">Cadastrar</a></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
