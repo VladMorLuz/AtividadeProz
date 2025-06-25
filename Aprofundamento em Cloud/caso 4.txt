@@ -1,0 +1,62 @@
+Estratégia para Implementação do AWS Systems Manager Patch Manager
+
+1. Objetivo
+Automatizar a aplicação de patches em instâncias EC2 usando AWS Systems Manager Patch Manager, garantindo segurança, conformidade e minimizando impactos no desempenho.
+
+2. Planejamento
+- Identificar instâncias EC2: Listar todas as instâncias no ambiente AWS usando o Console ou AWS CLI (aws ec2 describe-instances).
+- Classificar instâncias: Separar por ambiente (produção, desenvolvimento, teste) e criticidade.
+- Definir janelas de manutenção: Estabelecer horários de baixa utilização (ex.: 02:00-04:00 AM) para cada ambiente, consultando equipes de aplicação.
+- Testes iniciais: Selecionar 2-3 instâncias não críticas para validar o processo.
+
+3. Configuração do Patch Manager
+- Ativar Systems Manager: Garantir que todas as instâncias tenham o agente SSM instalado (verificar com aws ssm describe-instance-information).
+- Criar baseline de patches: No Console AWS, em Systems Manager > Patch Manager, criar uma baseline personalizada:
+  - Incluir patches de segurança críticos e importantes.
+  - Aprovar patches automaticamente após 7 dias de lançamento.
+  - Excluir patches específicos, se necessário (ex.: conhecidos por causar instabilidade).
+- Configurar grupos de patches: Criar Patch Groups via tags (ex.: Tag "PatchGroup=Producao"). Associar baselines a cada grupo.
+- Definir políticas de patch: Criar Maintenance Windows em Systems Manager:
+  - Agendar janelas semanais para cada Patch Group.
+  - Configurar taxa de execução (ex.: 10 instâncias por vez) para evitar sobrecarga.
+  - Habilitar notificações via SNS para falhas ou conclusões.
+
+4. Execução
+- Teste piloto: Executar patching nas instâncias de teste durante a janela definida. Monitorar logs no CloudWatch e desempenho via CloudWatch Metrics.
+- Rollout gradual: Após validação, aplicar em desenvolvimento, depois produção, respeitando janelas de manutenção.
+- Automação: Usar Run Command para executar patches fora de janelas, se necessário (ex.: patches de emergência).
+
+5. Mitigação de Impactos
+- Snapshots automáticos: Configurar backups via AWS Backup antes de cada patching.
+- Monitoramento: Usar CloudWatch Alarms para detectar picos de CPU/memória durante patching.
+- Reboot controlado: Configurar Patch Manager para reiniciar instâncias apenas se necessário.
+- Comunicação: Informar equipes sobre janelas de manutenção e possíveis impactos via e-mail/Slack.
+
+6. Validação e Conformidade
+- Relatórios: Gerar relatórios de conformidade via Systems Manager > Compliance, verificando instâncias atualizadas.
+- Auditoria: Configurar AWS Config para rastrear alterações nas políticas de patch.
+- Feedback: Coletar feedback das equipes após cada ciclo de patching para ajustes.
+
+7. Manutenção Contínua
+- Revisar baselines mensalmente para incluir novos patches.
+- Atualizar janelas de manutenção conforme mudanças no uso das aplicações.
+- Treinar equipe para usar Patch Manager e interpretar relatórios.
+
+Benefícios Esperados
+- Redução de vulnerabilidades por patches não aplicados.
+- Menos esforço manual, minimizando erros.
+- Maior conformidade com padrões de segurança.
+- Impacto mínimo no desempenho com janelas bem definidas.
+
+Ferramentas Utilizadas
+- AWS Systems Manager Patch Manager: Automatiza aplicação de patches.
+- AWS CloudWatch: Monitora desempenho e logs.
+- AWS Backup: Garante recuperação em caso de falhas.
+- AWS SNS: Notifica sobre status do patching.
+- AWS Config: Auditoria de conformidade.
+
+Cronograma
+- Semana 1: Planejamento e configuração inicial.
+- Semana 2: Teste piloto e validação.
+- Semana 3: Rollout em desenvolvimento.
+- Semana 4: Rollout em produção e relatórios iniciais.
